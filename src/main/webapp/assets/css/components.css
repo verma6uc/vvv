@@ -1,0 +1,184 @@
+/* Buttons */
+.btn {
+    font-weight: 500;
+    padding: 0.5rem 1.5rem;
+    transition: var(--transition-base);
+    backdrop-filter: blur(8px);
+    border-radius: 0.5rem;
+}
+
+.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.125rem;
+}
+
+.btn-primary {
+    background: rgba(8, 160, 248, 0.9);
+    border: 1px solid var(--border-light);
+    color: var(--text-high-contrast);
+}
+
+.btn-primary:hover {
+    background: var(--primary-color);
+    border-color: var(--border-light-hover);
+    box-shadow: 0 8px 16px rgba(8, 160, 248, 0.2);
+    transform: translateY(-2px);
+    color: var(--text-high-contrast);
+}
+
+.btn-outline-light {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: var(--text-high-contrast);
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--text-high-contrast);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    color: var(--text-high-contrast);
+}
+
+/* Cards */
+.card {
+    transition: var(--transition-base);
+    background: rgba(17, 24, 39, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-sm);
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-light-hover);
+    background: rgba(17, 24, 39, 0.7);
+}
+
+.card-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* Navigation */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+    background-color: rgba(17, 24, 39, 0.8) !important;
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-light);
+    transition: var(--transition-base);
+}
+
+.navbar.scrolled {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: var(--transition-fast);
+    color: var(--text-medium-contrast);
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+    transform: translateY(-1px);
+}
+
+/* Glassmorphic Effects */
+.glass {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    position: relative;
+}
+
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+    pointer-events: none;
+}
+
+.glass-dark {
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.glass-hover:hover {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: var(--border-light-hover);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Icons */
+.feather {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    vertical-align: middle;
+}
+
+.icon-circle {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(8, 160, 248, 0.1);
+}
+
+.icon-circle .feather {
+    width: 32px;
+    height: 32px;
+    color: var(--primary-color);
+}
+
+/* Lists */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: var(--text-medium-contrast);
+}
+
+.feature-list li .feather {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.75rem;
+    color: var(--primary-color);
+}

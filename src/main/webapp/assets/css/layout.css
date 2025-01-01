@@ -1,0 +1,238 @@
+/* Grid System Enhancements */
+.row {
+    margin-right: -1rem;
+    margin-left: -1rem;
+}
+
+.row > * {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+/* Hero Layouts */
+.hero {
+    min-height: calc(100vh - 76px); /* Subtract navbar height */
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, 
+        rgba(15, 23, 42, 0.9) 0%, 
+        rgba(15, 23, 42, 0.8) 100%
+    );
+    z-index: 1;
+}
+
+/* Feature Grid */
+.feature-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Agent Grid */
+.agent-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Process Steps */
+.process-steps {
+    position: relative;
+}
+
+.process-steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 2px;
+    height: calc(100% - 80px);
+    background: var(--border-light);
+    transform: translateX(-50%);
+}
+
+.process-step {
+    position: relative;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.process-step::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -8px;
+}
+
+/* Section Layouts */
+.section-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.section-medium {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-divider {
+    border-top: 1px solid var(--border-light);
+    margin: var(--section-spacing) 0;
+}
+
+/* Footer Layout */
+.footer {
+    padding: var(--section-spacing) 0;
+    position: relative;
+}
+
+.footer-grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.footer-bottom {
+    margin-top: var(--section-spacing);
+    padding-top: var(--component-spacing);
+    border-top: 1px solid var(--border-light);
+}
+
+/* CTA Sections */
+.cta-section {
+    position: relative;
+    padding: var(--section-spacing) 0;
+    text-align: center;
+}
+
+.cta-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem;
+    border-radius: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 0 1rem;
+    }
+
+    .process-steps::before {
+        display: none;
+    }
+
+    .process-step {
+        padding: 1rem;
+    }
+
+    .process-step::before {
+        left: 0;
+        transform: none;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: var(--section-spacing) 0;
+    }
+}
+
+/* Utility Layouts */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.gap-4 { gap: 1.5rem; }
+.gap-5 { gap: 3rem; }
+
+/* Image Layouts */
+.img-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(15, 23, 42, 0.8) 100%
+    );
+}
+
+/* Card Grid Layouts */
+.card-grid-2 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid-3 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid-4 {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+    .card-grid-4 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .card-grid-3, .card-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .card-grid-2, .card-grid-3, .card-grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
