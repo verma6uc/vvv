@@ -1,0 +1,30 @@
+# Build output
+target/
+*.class
+
+# IDE files
+.settings/
+.classpath
+.project
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+*.log
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Misc
+.DS_Store
+*.swp
+*~

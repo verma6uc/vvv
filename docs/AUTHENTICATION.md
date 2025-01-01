@@ -1,182 +1,189 @@
 # Authentication System Documentation
 
 ## Overview
-The authentication system provides a secure, token-based authentication flow with JWT (JSON Web Tokens) for the Yuvi Creator platform. It includes features for user sign-in, password reset, and protected route access control.
+The authentication system provides a secure, session-based authentication flow for the Yuvi Creator platform. It includes features for user sign-in, registration, email verification, password reset, and protected route access control.
 
 ## Architecture
 
 ### Core Components
 
-1. **AuthContext (`src/context/AuthContext.tsx`)**
-   - Manages authentication state
-   - Handles token storage and refresh
-   - Provides authentication status to the application
-   - Exposes methods for login, logout, and token management
+1. **Auth Services**
+   - **AuthService**: Core authentication and user management
+   - **SessionService**: Session management and validation
+   - **AuditService**: Security event logging and tracking
+   - **EmailService**: Email verification and notifications
 
-2. **Auth Service (`src/services/auth.ts`)**
-   - Handles API communication for authentication operations
-   - Implements password reset functionality
-   - Provides comprehensive error handling
-   - Manages token validation and refresh
+2. **Auth Servlets**
+   - **LoginServlet**: Handles user authentication
+   - **SignupServlet**: Manages user registration
+   - **ForgotPasswordServlet**: Handles password reset flow
+   - **EmailVerificationServlet**: Manages email verification
 
-3. **PrivateRoute Component (`src/components/auth/PrivateRoute.tsx`)**
-   - Protects routes requiring authentication
-   - Handles role-based access control
-   - Manages token refresh and redirection
-   - Provides loading states during authentication checks
+3. **Security Filters**
+   - **AuthenticationFilter**: Request authentication and user context
+   - **CsrfFilter**: CSRF attack prevention
+   - **SecurityHeadersFilter**: Security headers and CSP
+   - **RateLimitFilter**: Rate limiting and brute force protection
+
+4. **Utility Classes**
+   - **SecurityUtils**: Password hashing, token generation, validation
+   - **EmailUtils**: Email templating and sending
+   - **RequestResponseUtils**: Request/response handling
 
 ## Features
 
 ### 1. Sign In
 - Email and password authentication
 - Remember me functionality
-- Secure password input with show/hide toggle
-- Comprehensive error handling for various failure scenarios
-- Loading states for better UX
-- Automatic redirection based on user role
+- Session management
+- Rate limiting protection
+- Audit logging
+- CSRF protection
+- Secure cookie handling
 
-### 2. Password Reset Flow
-- **Request Password Reset**
+### 2. Registration
+- Email and password registration
+- Strong password validation
+- Email verification flow
+- Duplicate email prevention
+- Input validation and sanitization
+- Security event logging
+
+### 3. Password Reset Flow
+- **Request Reset**
   - Email validation
   - Rate limiting protection
   - Secure token generation
-  - Email delivery status handling
+  - Email delivery tracking
 
 - **Reset Password**
-  - Token validation
-  - Strong password requirements
+  - Token validation and expiration
+  - Password strength requirements
   - Password confirmation
-  - Real-time password strength validation
+  - Audit logging
 
-### 3. Token Management
-- Access token for API authentication
-- Refresh token for session maintenance
-- Automatic token refresh
-- Secure token storage in localStorage
-- Token invalidation on logout
+### 4. Email Verification
+- Secure verification tokens
+- Token expiration handling
+- Email delivery tracking
+- Rate limiting for resend requests
+- Success/failure logging
 
 ## Security Features
 
-### Password Requirements
-- Minimum 8 characters
-- At least one uppercase letter
-- At least one lowercase letter
-- At least one number
-- At least one special character
-- Real-time validation feedback
+### Password Security
+- PBKDF2 password hashing
+- Per-user salt generation
+- Configurable iteration count
+- Password strength validation:
+  - Minimum 8 characters
+  - Mixed case letters
+  - Numbers and symbols
+  - Common password check
 
-### Error Handling
-- Rate limiting protection
-- Invalid credentials handling
-- Account lockout detection
-- Network error handling
-- Token expiration handling
+### Session Security
+- Secure session tokens
+- Session timeout management
+- Remember-me functionality
+- Session invalidation
+- Concurrent session control
+
+### Request Security
+- CSRF protection
+- Rate limiting
+- Security headers:
+  - X-Frame-Options
+  - X-Content-Type-Options
+  - X-XSS-Protection
+  - Content-Security-Policy
+- Input validation
+- Output encoding
+
+### Audit Logging
+- Login attempts
+- Password changes
+- Email verifications
+- Security events
+- User actions
+- IP tracking
+- User agent logging
 
 ## API Endpoints
 
 ### Authentication
 ```
-POST /api/auth/login
-- Request: { email: string, password: string }
-- Response: { accessToken: string, refreshToken: string, systemRole: string }
+POST /login
+- Parameters: email, password, remember
+- Response: Redirects to home or returns error
+
+POST /signup
+- Parameters: email, password, firstName, lastName
+- Response: Redirects to login or returns error
+
+GET /verify-email
+- Parameters: token
+- Response: Redirects to login with success/error
+
+POST /forgot-password
+- Parameters: email
+- Response: Shows success message (doesn't confirm email exists)
+
+POST /reset-password
+- Parameters: token, newPassword, confirmPassword
+- Response: Redirects to login or shows error
 ```
 
-### Password Reset
-```
-POST /api/auth/forgot-password
-- Request: { email: string }
-- Response: { success: boolean, message: string }
+## Error Handling
 
-GET /api/auth/validate-reset-token
-- Query: token=string
-- Response: { success: boolean, message?: string }
+### Authentication Errors
+- Invalid credentials
+- Account not verified
+- Account locked
+- Rate limit exceeded
+- Invalid token
+- Session expired
 
-POST /api/auth/reset-password
-- Request: { token: string, newPassword: string }
-- Response: { success: boolean, message: string }
-```
-
-### Token Refresh
-```
-POST /api/auth/refresh
-- Headers: { Authorization: Bearer <refresh_token> }
-- Response: { accessToken: string, refreshToken: string, systemRole: string }
-```
-
-## User Roles
-- **NONE**: Regular user access
-- **SUPERADMIN**: Administrative access
-  - Additional dashboard access
-  - System management capabilities
-
-## Protected Routes
-Protected routes are wrapped with the `PrivateRoute` component:
-```typescript
-<PrivateRoute allowedRoles={['SUPERADMIN']}>
-  <AdminDashboard />
-</PrivateRoute>
-```
-
-## UI Components
-
-### Sign In Page
-- Clean, modern interface following design language
-- Responsive layout
-- Gradient background with blur effects
-- Accessible form controls
-- Loading states and error messages
-- Links to password reset and sign up
-
-### Password Reset Pages
-- Step-by-step flow
-- Clear instructions
-- Real-time validation
-- Progress indicators
-- Success/error notifications
-
-## Styling
-- Follows Yuvi design language
-- Dark mode optimized
-- Consistent color scheme
-- Responsive design
-- Accessible contrast ratios
-- Interactive states (hover, focus, active)
-
-## Error Messages
-- User-friendly error messages
-- Clear action items
-- Context-specific guidance
-- Non-technical language
-- Security-conscious information disclosure
+### Security Events
+- Failed login attempts
+- Password reset requests
+- Email verification attempts
+- Suspicious IP activity
+- Token validation failures
 
 ## Best Practices
 
 ### Security
 - HTTPS-only communication
-- Secure token storage
+- Secure session management
 - XSS protection
 - CSRF protection
 - Rate limiting
 - Input validation
+- Output encoding
+- Audit logging
+- Error handling
 
-### UX/UI
-- Immediate feedback
-- Clear error messages
-- Loading indicators
-- Smooth transitions
-- Responsive design
-- Keyboard accessibility
+### Session Management
+- Secure cookie settings
+- Session timeout
+- Remember-me security
+- Concurrent session control
+- Session invalidation
+- Token rotation
 
-### Code Organization
-- TypeScript for type safety
-- Component-based architecture
-- Separation of concerns
-- Consistent error handling
-- Comprehensive documentation
+### Error Messages
+- User-friendly messages
+- Security-conscious disclosure
+- Consistent formatting
+- Clear instructions
+- Audit logging
 
 ## Future Improvements
-1. OAuth integration for social login
+1. OAuth/OpenID integration
 2. Two-factor authentication
-3. Session management improvements
-4. Enhanced security features
-5. Biometric authentication support
+3. Biometric authentication
+4. Enhanced session management
+5. Advanced rate limiting
+6. IP-based security
+7. Enhanced audit logging
+8. Security event monitoring
