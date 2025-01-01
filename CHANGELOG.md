@@ -4,6 +4,38 @@ All notable changes to the Yuvi project will be documented in this file.
 
 ## [Unreleased]
 
+### Added Authentication Pages
+- Created static authentication pages with consistent dark mode design:
+  - Login page with:
+    - Email and password fields
+    - Remember me option
+    - Forgot password link
+    - Social login options (Google, GitHub, GitLab)
+    - Sign up link
+  - Sign up page with:
+    - First and last name fields
+    - Email field
+    - Password with strength requirements
+    - Terms acceptance checkbox
+    - Social signup options
+    - Real-time password validation
+  - Forgot password page with:
+    - Email input
+    - Clear instructions
+    - Back to login link
+  - Reset password page with:
+    - New password input
+    - Password confirmation
+    - Password requirements checker
+    - Token validation
+- Added common features across auth pages:
+  - Form validation
+  - Password visibility toggle
+  - Auto-dismissing alerts
+  - Responsive design
+  - Glassmorphic UI elements
+  - Consistent branding
+
 ### Added Database Schema Support
 - Created DatabaseSchemaUtils for type-safe database operations:
   - Enum mappings for database types:
