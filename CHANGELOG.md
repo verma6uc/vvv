@@ -4,19 +4,42 @@ All notable changes to the Yuvi project will be documented in this file.
 
 ## [Unreleased]
 
-### Added
-- Initial project setup
-- Updated pom.xml with essential dependencies:
-  - Jakarta Servlet API 6.0.0
-  - JSTL 3.0.0
-  - Gson 2.10.1
-  - PostgreSQL Driver 42.6.0
-  - JUnit Jupiter 5.9.2
-- Added Maven plugins:
-  - maven-compiler-plugin configured for Java 17
-  - maven-war-plugin for WAR packaging
-- Set up project with Java 17 configuration
-- Specified Apache Tomcat 10.1.18 requirement for Jakarta EE 9+ compatibility
+### Added Database Schema Support
+- Created DatabaseSchemaUtils for type-safe database operations:
+  - Enum mappings for database types:
+    - AgentType (PLANNING, CONVERSATION, etc.)
+    - ApplicationPhase (MEMORY, BLUEPRINT, etc.)
+    - MemoryBlockType (IDEA, FEATURE_CONCEPT, etc.)
+    - TaskStatus (OPEN, IN_PROGRESS, etc.)
+  - CRUD operations for:
+    - Agents and agent task types
+    - Memory blocks and application phases
+    - Tasks and task status management
+  - Schema validation and initialization utilities
+  - PostgreSQL enum type casting support
+
+### Added Database Infrastructure
+- Created database utilities package (ai.yuvi.db.utilities):
+  - ConnectionPool: Manages database connection pooling
+  - DatabaseUtils: Common database operations and utilities
+- Added database configuration:
+  - Connection pooling support
+  - Performance optimization settings
+  - Prepared statement caching
+  - Transaction management
+  - Connection validation
+  - JMX monitoring capabilities
+
+### Added Marketing Pages Infrastructure
+- Created marketing pages package (ai.yuvi.marketing.pages):
+  - BaseMarketingServlet: Abstract base class for marketing pages
+  - Common functionality for all marketing pages:
+    - Request parameter handling
+    - Error/success message management
+    - AJAX request detection
+    - JSON response formatting
+    - Common attribute setting
+    - View path management
 
 ### Added Marketing Pages
 - Created modular home page with components:
@@ -145,28 +168,19 @@ All notable changes to the Yuvi project will be documented in this file.
   - Development process workflow
   - Tech stack requirements
 
-### Added Database Infrastructure
-- Created database utilities package (ai.yuvi.db.utilities):
-  - ConnectionPool: Manages database connection pooling
-  - DatabaseUtils: Common database operations and utilities
-- Added database configuration:
-  - Connection pooling support
-  - Performance optimization settings
-  - Prepared statement caching
-  - Transaction management
-  - Connection validation
-  - JMX monitoring capabilities
-
-### Added Marketing Pages Infrastructure
-- Created marketing pages package (ai.yuvi.marketing.pages):
-  - BaseMarketingServlet: Abstract base class for marketing pages
-  - Common functionality for all marketing pages:
-    - Request parameter handling
-    - Error/success message management
-    - AJAX request detection
-    - JSON response formatting
-    - Common attribute setting
-    - View path management
+### Initial Setup
+- Initial project setup
+- Updated pom.xml with essential dependencies:
+  - Jakarta Servlet API 6.0.0
+  - JSTL 3.0.0
+  - Gson 2.10.1
+  - PostgreSQL Driver 42.6.0
+  - JUnit Jupiter 5.9.2
+- Added Maven plugins:
+  - maven-compiler-plugin configured for Java 17
+  - maven-war-plugin for WAR packaging
+- Set up project with Java 17 configuration
+- Specified Apache Tomcat 10.1.18 requirement for Jakarta EE 9+ compatibility
 
 ### Fixed
 - Added missing Jakarta dependencies to resolve JSP compilation issues:
